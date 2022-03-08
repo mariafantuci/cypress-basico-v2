@@ -155,4 +155,14 @@ describe("Central de Atendimento ao Cliente TAT", function () {
     cy.get("a").invoke("removeAttr", "target").click();
     cy.contains("Talking About Testing").should("be.visible");
   });
+
+  it.only("exibe mensagem por 3 segundos", function () {
+    cy.clock(); // congela o relógio do navegador
+    cy.fillMandatoryFieldsAndSubmit();
+    cy.get("#phone-checkbox").check();
+    cy.get('button[type="submit"]').click();
+    cy.get(".error").should("be.visible");
+    cy.tick(3000); 
+    cy.get(".error").should("not.be.visible");
+  });
 });
